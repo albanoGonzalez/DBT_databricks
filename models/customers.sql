@@ -1,3 +1,8 @@
+--this is going to create the final table as a view, i also updated the dbt_project.yml
+{{
+    config (materialized='view')
+}}
+
 with customers as (
 
     select
