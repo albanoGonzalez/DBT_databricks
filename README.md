@@ -23,6 +23,7 @@ Create the new project and also create a new environment
 Create a new branch to commit your changes
 You can split up your project in different folders but first of all create your models from the data sources.
 Sources: create a yml file under a sources: key 
+Test: general or singular test 
 
 ### Commands
 
