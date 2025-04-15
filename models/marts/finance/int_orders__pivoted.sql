@@ -9,7 +9,7 @@ pivoted as (
     order_id,
 
     {%- for method in paymentmethod %}
-        sum(case when method='{{ method }}' then amount else 0 end) as {{ method }}_amount
+        sum(case when paymentmethod='{{ method }}' then amount else 0 end) as {{ method }}_amount
         {%- if not loop.last -%}
             ,
         {%- endif %}
