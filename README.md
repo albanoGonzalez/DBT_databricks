@@ -1,37 +1,90 @@
-Welcome to your new dbt project!
+## 🚀 Project Overview
 
-### Set up Databricks
-Use your existing account or create one with the free trial.
-Create your own worskpace in Databricks and upload your files, here you can take your files from Azure SQL or just upload the csv for this test.
-In the SQL Editor run the queries to verify the tables and the values.
-Grant all privileges to the users
+This project demonstrates how to:
+- Set up a Databricks workspace and load your data.
+- Connect Databricks with dbt Cloud.
+- Organize, develop, and test your dbt models using best practices.
 
-### Connect Databricks with DBT
-There are two ways to do it:
-    1. the first one is through Partner Connect from Databricks, this one will provide you the way to create your own account.
-    2. Create your proper DBT Cloud account and build the databricks connections yourself.
+---
+
+## 1. Set Up Databricks
+
+1. **Create a Workspace:**  
+   Use your existing Databricks account or sign up for a free trial.  
+   Create a new workspace and upload your data files. You can extract data from Azure SQL or simply upload CSVs for testing.
+
+2. **Verify Your Data:**  
+   Use the SQL Editor to run queries and verify your tables and data values.
+
+3. **Grant Privileges:**  
+   Make sure to grant the necessary privileges (like SELECT) to the users or service principals (e.g., `DBT_CLOUD_USER`) that will access the data from dbt Cloud.
+
+---
+
+## 2. Connect Databricks with dbt
+
+There are two main ways to connect dbt with Databricks:
+
+- **Option 1: Partner Connect (Recommended for Simplicity)**
+  - Use Databricks Partner Connect to quickly set up dbt Cloud integration.
+  - This will guide you through creating a dbt Cloud account and connecting it to your Databricks workspace.
+
+- **Option 2: Manual Setup**
+  - Create your own dbt Cloud account (free 14-day trial available).
+  - In dbt Cloud, add a new Databricks connection.  
+    - Go to **Connections** in your profile.
+    - Configure the hostname, HTTP path, catalog, schema, and access token.
+    - To generate a Databricks access token, go to your Databricks workspace, click your user profile (top right), and create a new token.
+
+---
+
+## 3. Set Up Your dbt Cloud Project
+
+- **Link GitHub:**  
+  In your dbt Cloud profile, link your GitHub account to version-control your project.
+
+- **Create a New Project & Environment:**  
+  Set up a new dbt project and environment in dbt Cloud.
+
+- **Configure the Databricks Connection:**  
+  Add the Databricks connection details as described above.
+
+---
+
+## 4. Start Developing Your Project
+
+- **Branching:**  
+  Create a new branch for your work (recommended: use Git best practices).
+
+- **Project Structure:**  
+  Organize your project into folders:
+  - `models/` for your dbt models (start by creating models from your data sources).
+  - `sources/` for YAML source definitions.
+  - `tests/` for generic or singular tests.
+  - `macros/` for reusable SQL macros.
+  - `snapshots/` for snapshotting slowly changing dimensions.
+
+- **Best Practices:**  
+  - Use the `ref` function to reference other models.
+  - Define sources in YAML files.
+  - Add tests for uniqueness and not null on primary keys.
+  - Use views for lightweight models, tables for BI/reporting, and incremental models for large/fast-changing data.
+
+---
+
+## 5. Common dbt Commands
+
+| Command                                | Description                                                                                           |
+|-----------------------------------------|-------------------------------------------------------------------------------------------------------|
+| `dbt run`                              | Executes all models and materializes them as tables/views/incremental models in your warehouse.       |
+| `dbt test`                             | Runs all tests (generic and custom) to validate data quality and integrity.                           |
+| `dbt docs generate`                    | Generates documentation and a lineage graph for your dbt project.                                     |
+| `dbt run --select dim_customer`        | Runs only the `dim_customer` model (and its dependencies).                                            |
+| `dbt test --select dim_customer`       | Runs only the tests associated with the `dim_customer` model.                                         |
+| `dbt freshness`                        | Checks the freshness of your sources.                                                                 |
+| `dbt build`                            | Runs `dbt run`, `dbt test`, `dbt snapshot`, and `dbt seed` in DAG order—ideal for production.         |
+| `dbt deps`                             | Installs dependencies listed in `packages.yml`.                                                       |
+| `dbt run-operation grant_select`       | Runs a macro, e.g., to grant SELECT privileges (requires macro definition).                           |
 
 
-### Set up DBT CLOUD
-Use your existing account or create one with the free trial (14 days).
-In your profile, link your github account to save your progress.
-Add the databricks connection, to do it go to Connections in your profile and configure the hostname, server, catalog, schema and token (to get the token you must go to your databricks account, in the right side, click in your profile and create a new token)
-Create the new project and also create a new environment
-
-
-### Time to work on your proyect
-Create a new branch to commit your changes
-You can split up your project in different folders but first of all create your models from the data sources.
-Sources: create a yml file under a sources: key 
-Test: general or singular test 
-
-### Commands
-
-dbt run --> Executes the SQL models defined in your dbt project and materializes them in the data warehouse (as tables, views, or incremental models).
-dbt test --> Runs the tests defined in your project to validate data quality and integrity. These can be generic tests (e.g., unique, not_null) or custom SQL-based tests.
-dbt docs generate --> Generates documentation for your dbt project, including metadata about models, sources, and a lineage graph that shows dependencies between models.
-dbt run --select dim_customer --> Runs a specific model (dim_customer) and its dependencies (if any). This is useful for testing or updating only one part of your pipeline.
-dbt test --select dim_customer --> Runs only the tests associated with the specified model (dim_customer). This is helpful for validating changes made to a specific model without running all tests.
-dbt freshness -->
-dbt build --> Combines multiple steps (dbt run, dbt test, dbt snapshot, and dbt seed) into a single execution. It follows the order of the Directed Acyclic Graph (DAG) of your project and is ideal for production workflows.
 
