@@ -1,0 +1,29 @@
+models:
+  - name: fact_orders
+    latest_version: 1 ##Call out which version will be the default version when running this model
+    access: public
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: order_id
+        data_type: bigint
+        constraints:
+          - type: not_null
+      - name: customer_id
+        data_type: bigint
+      - name: order_date
+        data_type: date
+      - name: amount
+        data_type: decimal(35,2)
+    versions: ###Add versioning section defining each version and listing changes to contract
+      - v: 1
+          ##Matches above! Nothing more needed
+        config:
+            alias: fact_orders
+      - v: 2
+        columns:
+          - name: amount_total ##v2 Adds in new column name and date type change
+            data_type: decimal(35,2)
+          - include: all #Includes all other fields
+            #exclude: [] #But removes the old name

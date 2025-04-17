@@ -12,7 +12,7 @@ with customers as (
 
 orders as (
 
-    select * from {{ ref('fact_orders') }}
+    select * from {{ ref('fact_orders', v=2) }}
 
 ),
 
